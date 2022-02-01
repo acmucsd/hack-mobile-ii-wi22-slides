@@ -23,9 +23,9 @@ export const theme = slideTheme;
 
 # React Native Workshop 2
 
-## Slides: acmurl.com/react-native-slides
+## Slides: acmurl.com/react-native-2-slides
 
-## Check in: `mobileapp`
+## Check in: `reactp2`
 
 </Title>
 
@@ -34,14 +34,14 @@ export const theme = slideTheme;
 
 # Don't forget!
 
-<CheckInButton code='mobileapp' />
+<CheckInButton code="reactp2" />
 
 ---
 
 # About these slides...
 
-- These slides were made using [mdx-deck](https://codeTheme.com/jxnblk/mdx-deck).
-- Use the **arrow keys** or **spacebar** to navigate between them!
+-   These slides were made using [mdx-deck](https://codeTheme.com/jxnblk/mdx-deck).
+-   Use the **arrow keys** or **spacebar** to navigate between them!
 
 **Note:** These slides are NOT responsive because CSS is hard, so it's best to view them on a 16:9 screen.
 
@@ -63,40 +63,40 @@ export const theme = slideTheme;
 
 # What is React Native?
 
-- A **framework** for building **native mobile apps** with <b>React</b>
-  - **Native apps** run directly on your phone/tablet rather than from the browser
-  - <b>React</b> itself is a JavaScript framework for building user interfaces
+-   A **framework** for building **native mobile apps** with <b>React</b>
+    -   **Native apps** run directly on your phone/tablet rather than from the browser
+    -   <b>React</b> itself is a JavaScript framework for building user interfaces
 
 ---
 
 # Why React Native?
 
-- Generally easier to grasp, especially for people coming from web dev
-- Access to the amazingness of `npm`
-  - Large **ecosystem** of JavaScript libraries and packages
-- **Cross-platform** - you can write **one codebase** for both iOS and Android!
+-   Generally easier to grasp, especially for people coming from web dev
+-   Access to the amazingness of `npm`
+    -   Large **ecosystem** of JavaScript libraries and packages
+-   **Cross-platform** - you can write **one codebase** for both iOS and Android!
 
 ---
 
 # What are components?
 
-- Allow you to **reuse** snippets of code without the need to copy-paste
-  - Ideal if you have a bunch of similar-looking elements
-- In React, **everything is a component!**
-  - The app is one big component
-  - Contains many smaller components inside
+-   Allow you to **reuse** snippets of code without the need to copy-paste
+    -   Ideal if you have a bunch of similar-looking elements
+-   In React, **everything is a component!**
+    -   The app is one big component
+    -   Contains many smaller components inside
 
 ---
 
 # How do we write components?
 
-- In React, we can write components with **JSX**
-  - Looks like HTML, but stuck in the middle of some JavaScript
+-   In React, we can write components with **JSX**
+    -   Looks like HTML, but stuck in the middle of some JavaScript
 
 ```js
 // 'Foo' is a very basic component here
 const Foo = () => {
-  return <h1>Hello world!</h1>;
+    return <h1>Hello world!</h1>;
 };
 ```
 
@@ -104,17 +104,17 @@ const Foo = () => {
 
 # Props
 
-- Short for **properties**
-- Allows you to pass specific attributes to a component
-- In functional components, they are simply the **arguments** of the function
+-   Short for **properties**
+-   Allows you to pass specific attributes to a component
+-   In functional components, they are simply the **arguments** of the function
 
 ```js
 const NewsArticle = ({ title, date, text }) => (
-  <div>
-    <h1>{title}</h1>
-    <h2>{date}</h2>
-    <p>{text}</p>
-  </div>
+    <div>
+        <h1>{title}</h1>
+        <h2>{date}</h2>
+        <p>{text}</p>
+    </div>
 );
 ```
 
@@ -122,16 +122,16 @@ const NewsArticle = ({ title, date, text }) => (
 
 # State
 
-- Keeps track of specific data that can change at any time
-- With the `useState` hook, you can **use state** in functional components
-  - Takes the **default value** as an argument
-  - Returns a tuple containing the state variable and a function to change it
+-   Keeps track of specific data that can change at any time
+-   With the `useState` hook, you can **use state** in functional components
+    -   Takes the **default value** as an argument
+    -   Returns a tuple containing the state variable and a function to change it
 
 ```js
 import React, { useState } from "react";
 const Cookie = () => {
-  const [clicks, setClicks] = useState(0);
-  //...
+    const [clicks, setClicks] = useState(0);
+    //...
 };
 ```
 
@@ -139,15 +139,15 @@ const Cookie = () => {
 
 # `useEffect` hook
 
-- At its core, `useEffect` controls what happens when your component is rendered or derendered
-  - Previously, you could only do this with class components
+-   At its core, `useEffect` controls what happens when your component is rendered or derendered
+    -   Previously, you could only do this with class components
 
 ```js
 useEffect(() => {
-  // component rendered
-  return () => {
-    //component derendered
-  };
+    // component rendered
+    return () => {
+        //component derendered
+    };
 });
 ```
 
@@ -155,13 +155,13 @@ useEffect(() => {
 
 # `useEffect` hook
 
-- Also used to update things or run code when a **dependency** is changed
-  - Dependencies are passed in as an array
-  - Empty array = function runs on **first** render of component
+-   Also used to update things or run code when a **dependency** is changed
+    -   Dependencies are passed in as an array
+    -   Empty array = function runs on **first** render of component
 
 ```js
 useEffect(() => {
-  // do something
+    // do something
 }, [dependency]);
 ```
 
@@ -169,10 +169,10 @@ useEffect(() => {
 
 # React Native Components
 
-- React Native uses a slightly different set of components
-- **Native, mobile components** instead of web-based
-  - Dependent on native Android and iOS components
-- Here's a basic conversion from web to native:
+-   React Native uses a slightly different set of components
+-   **Native, mobile components** instead of web-based
+    -   Dependent on native Android and iOS components
+-   Here's a basic conversion from web to native:
 
 | Native         | Web                          |
 | -------------- | ---------------------------- |
@@ -185,16 +185,16 @@ useEffect(() => {
 
 # Expo
 
-- Provides a framework for running and developing React Native apps
-  - No need to install Android/iOS SDKs!
+-   Provides a framework for running and developing React Native apps
+    -   No need to install Android/iOS SDKs!
 
 ## **Running your app**
 
 1. Use the command `yarn start` or `expo start`. A browser window should open up.
 2. Download the Expo app on your phone
 3. Scan the QR code on the browser window that opened with the Expo app
-   - If this doesn't work, try selecting the "Tunnel" option above the QR code
-   - Alternatively, click **Run in web browser** if you don't want to use your device
+    - If this doesn't work, try selecting the "Tunnel" option above the QR code
+    - Alternatively, click **Run in web browser** if you don't want to use your device
 
 ---
 
@@ -220,22 +220,22 @@ This will help us understand how to build good-looking interfaces!
 
 (This is only if you want to follow along locally)
 
-- Download <b>Node.js</b> and <b>npm</b> [here](https://nodejs.org/en/download/)
-- Install <b>Expo</b> with `npm install -g expo`
-- Have an Android or iOS device/emulator handy
-  - Be sure to download the Expo app on your device!
-- **Starter code**: [click here](https://github.com/acmucsd/hack-mobile-ii-wi22)
+-   Download <b>Node.js</b> and <b>npm</b> [here](https://nodejs.org/en/download/)
+-   Install <b>Expo</b> with `npm install -g expo`
+-   Have an Android or iOS device/emulator handy
+    -   Be sure to download the Expo app on your device!
+-   **Starter code**: [click here](https://github.com/acmucsd/hack-mobile-ii-wi22/tree/starter-code)
 
 ---
 
 # Project Structure
 
-- `📂 components` contains isolated custom components
-  - `Header` - top of the page
-  - `Post` - each Instagram post on the home page
-  - `Stories` - Holds our `Story` components
-- `App.js` is the top-level container that wraps everything together
-- `data.js` to hold some mock data because we don't have a real database :(
+-   `📂 components` contains isolated custom components
+    -   `Header` - top of the page
+    -   `Post` - each Instagram post on the home page
+    -   `Stories` - Holds our `Story` components
+-   `App.js` is the top-level container that wraps everything together
+-   `data.js` to hold some mock data because we don't have a real database :(
 
 ---
 
@@ -245,43 +245,46 @@ This will help us understand how to build good-looking interfaces!
 
 <CodeSurfer theme={codeTheme}>
 
+
 ```jsx title="Header.js"
 import React from "react";
 import { StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
 const INSTAGRAM_LOGO =
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png";
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png";
 
 export default function Header() {
-  return (
-    <>
-      <TouchableOpacity>
-        <Feather name='camera' size={24} />
-      </TouchableOpacity>
+    return (
+        <>
+            <TouchableOpacity>
+                <Feather name="camera" size={24} />
+            </TouchableOpacity>
 
-      <Image source={{ uri: INSTAGRAM_LOGO }} style={styles.logo} />
+            <Image source={{ uri: INSTAGRAM_LOGO }} style={styles.logo} />
 
-      <TouchableOpacity>
-        <Feather name='send' size={24} />
-      </TouchableOpacity>
-    </>
-  );
+            <TouchableOpacity>
+                <Feather name="send" size={24} />
+            </TouchableOpacity>
+        </>
+    );
 }
 
 const styles = StyleSheet.create({
-  logo: {
-    flex: 1,
-    height: 30,
-    resizeMode: "contain",
-  },
+    logo: {
+        flex: 1,
+        height: 30,
+        resizeMode: "contain",
+    },
 });
 ```
 
 ```diff 10,20 subtitle="Shorthand for React fragments"
+
 ```
 
 </CodeSurfer>
+
 
 ---
 
@@ -290,6 +293,7 @@ const styles = StyleSheet.create({
 ---
 
 <CodeSurfer theme={codeTheme}>
+
 
 ```jsx
 import React from "react";
@@ -414,10 +418,10 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
 });
-
 ```
 
 </CodeSurfer>
+
 
 ---
 
@@ -426,6 +430,7 @@ const styles = StyleSheet.create({
 ---
 
 <CodeSurfer theme={codeTheme}>
+
 
 ```jsx
 import React from "react";
@@ -505,10 +510,10 @@ const styles = StyleSheet.create({
         maxWidth: 64,
     },
 });
-
 ```
 
 </CodeSurfer>
+
 
 ---
 
@@ -517,6 +522,7 @@ const styles = StyleSheet.create({
 ---
 
 <CodeSurfer theme={codeTheme}>
+
 
 ```jsx
 import React from "react";
@@ -549,6 +555,7 @@ export default function Stories() {
 
 </CodeSurfer>
 
+
 ---
 
 ## **Putting it all together: `App.js` 👨‍💻**
@@ -556,6 +563,7 @@ export default function Stories() {
 ---
 
 <CodeSurfer theme={codeTheme}>
+
 
 ```jsx
 import React from "react";
@@ -622,10 +630,10 @@ const styles = StyleSheet.create({
         backgroundColor: "#fafafa",
     },
 });
-
 ```
 
 </CodeSurfer>
+
 
 ---
 
@@ -645,9 +653,9 @@ const styles = StyleSheet.create({
 
 ## If you're interested in learning more
 
-- **[ReactJS docs](https://reactjs.org/)**
-  - Brush up on the <b>fundamentals</b>
-- **[Official React Native docs](https://reactnative.dev/)**
-  - <b>Mobile-specific</b> concepts and guides
-- **[React Navigation](https://reactnavigation.org/)**
-  - Advanced navigation tricks
+-   **[ReactJS docs](https://reactjs.org/)**
+    -   Brush up on the <b>fundamentals</b>
+-   **[Official React Native docs](https://reactnative.dev/)**
+    -   <b>Mobile-specific</b> concepts and guides
+-   **[React Navigation](https://reactnavigation.org/)**
+    -   Advanced navigation tricks
