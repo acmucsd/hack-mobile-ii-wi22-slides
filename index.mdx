@@ -67,17 +67,6 @@ export const theme = slideTheme;
   - **Native apps** run directly on your phone/tablet rather than from the browser
   - <b>React</b> itself is a JavaScript framework for building user interfaces
 
-## There's a few reasons why this is good...
-
----
-
-# Why React Native?
-
-- Current mobile dev landscape: 😕
-  - <b>Android</b> - very hard, requires in-depth Java/Kotlin experience
-  - <b>iOS</b> - limited to Mac, which is 💸
-  - <b>Flutter</b> - very promising, but also very new
-
 ---
 
 # Why React Native?
@@ -103,12 +92,8 @@ export const theme = slideTheme;
 
 - In React, we can write components with **JSX**
   - Looks like HTML, but stuck in the middle of some JavaScript
-- We'll go more in-depth about what each line means later
 
 ```js
-// This line is required if we want to write JSX
-import React from "react";
-
 // 'Foo' is a very basic component here
 const Foo = () => {
   return <h1>Hello world!</h1>;
@@ -182,41 +167,10 @@ useEffect(() => {
 
 ---
 
-<Section>
-
-
-# This workshop
-
-## We'll be going over some slightly more advanced concepts
-
-1. TODO
-2. EVERYTHING AFTER THIS LINE IS A TODO
-
-</Section>
-
-
----
-
-# Demo
-
----
-
-# Before we begin...
-
-(This is only if you want to follow along locally)
-
-- Download <b>Node.js</b> and <b>npm</b> [here](https://nodejs.org/en/download/)
-- Install <b>Expo</b> with `npm install -g expo`
-- Have an Android or iOS device/emulator
-  - Be sure to download the expo app!
-- **Starter code**: [click here](https://github.com/garrettluu/react-native-workshop-code)
-
----
-
 # React Native Components
 
 - React Native uses a slightly different set of components
-- Native, mobile components instead of web-based
+- **Native, mobile components** instead of web-based
   - Dependent on native Android and iOS components
 - Here's a basic conversion from web to native:
 
@@ -244,694 +198,434 @@ useEffect(() => {
 
 ---
 
+<Section>
+
+
+# This workshop
+
+## More coding focused: we'll be building an Instagram clone
+
+This will help us understand how to build good-looking interfaces!
+
+</Section>
+
+
+---
+
+# Demo
+
+---
+
+# Before we begin...
+
+(This is only if you want to follow along locally)
+
+- Download <b>Node.js</b> and <b>npm</b> [here](https://nodejs.org/en/download/)
+- Install <b>Expo</b> with `npm install -g expo`
+- Have an Android or iOS device/emulator handy
+  - Be sure to download the Expo app on your device!
+- **Starter code**: [click here](https://github.com/acmucsd/hack-mobile-ii-wi22)
+
+---
+
 # Project Structure
 
-- `📂 screens` contains a layout/screen of the app
-  - Only 2 screens: `Home` and `EditNote`
 - `📂 components` contains isolated custom components
-  - Only 1: `Note` for displaying our notes
+  - `Header` - top of the page
+  - `Post` - each Instagram post on the home page
+  - `Stories` - Holds our `Story` components
 - `App.js` is the top-level container that wraps everything together
-- `storage.js` is just a mock database for demo purposes
+- `data.js` to hold some mock data because we don't have a real database :(
 
-## Let's take a look at `Home.js`, our home screen.
+---
+
+## **Starting simple: building `Header.js` 👨‍💻**
 
 ---
 
 <CodeSurfer theme={codeTheme}>
 
+```jsx title="Header.js"
+import React from "react";
+import { StyleSheet, TouchableOpacity, Image } from "react-native";
+import { Feather } from "@expo/vector-icons";
 
-```jsx title="Home.js"
-export default function Home() {
+const INSTAGRAM_LOGO =
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png";
+
+export default function Header() {
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <ScrollView>
-        <View style={styles.container}>
-          <Text style={styles.title}>Hello World!</Text>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <>
+      <TouchableOpacity>
+        <Feather name='camera' size={24} />
+      </TouchableOpacity>
+
+      <Image source={{ uri: INSTAGRAM_LOGO }} style={styles.logo} />
+
+      <TouchableOpacity>
+        <Feather name='send' size={24} />
+      </TouchableOpacity>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
+  logo: {
     flex: 1,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 20,
-  },
-  title: {
-    fontSize: 36,
-    fontWeight: "bold",
+    height: 30,
+    resizeMode: "contain",
   },
 });
 ```
 
-```diff 3,9 subtitle="SafeAreaView keeps the contents inside the screen"
-
-```
-
-```diff 4,8 subtitle="ScrollView allows us to scroll"
-
-```
-
-```diff 13:28 subtitle="Instead of CSS, this is how we style components"
-
+```diff 10,20 subtitle="Shorthand for React fragments"
 ```
 
 </CodeSurfer>
 
-
 ---
 
-## **Let's write our first component, `Note.js`! 👨‍💻**
+## **Now let's build `Post.js` 👨‍💻**
 
 ---
 
 <CodeSurfer theme={codeTheme}>
-
-
-```jsx title="Note.js"
-import React from "react";
-import { StyleSheet, Text, Button, View } from "react-native";
-
-export default function Note({ title, content, onClick }) {
-  return <View style={styles.container}></View>;
-}
-
-const styles = StyleSheet.create({
-  container: {
-    borderWidth: 1,
-    borderColor: "black",
-    width: "100%",
-    padding: 5,
-  },
-  h1: {
-    fontSize: 24,
-  },
-});
-```
-
-```jsx title="Note.js" subtitle="First, let's add a title component, displaying the title prop"
-import React from "react";
-import { StyleSheet, Text, Button, View } from "react-native";
-
-export default function Note({ title, content, onClick }) {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.h1}>{title}</Text>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    borderWidth: 1,
-    borderColor: "black",
-    width: "100%",
-    padding: 5,
-  },
-  h1: {
-    fontSize: 24,
-  },
-});
-```
-
-```jsx title="Note.js" subtitle="Another Text component to display the content"
-import React from "react";
-import { StyleSheet, Text, Button, View } from "react-native";
-
-export default function Note({ title, content, onClick }) {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.h1}>{title}</Text>
-      <Text>{content}</Text>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    borderWidth: 1,
-    borderColor: "black",
-    width: "100%",
-    padding: 5,
-  },
-  h1: {
-    fontSize: 24,
-  },
-});
-```
-
-```jsx title="Note.js" subtitle="Finally, a button for editting the note"
-import React from "react";
-import { StyleSheet, Text, Button, View } from "react-native";
-
-export default function Note({ title, content, onClick }) {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.h1}>{title}</Text>
-      <Text>{content}</Text>
-      <Button title='Edit note' onPress={onClick} />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    borderWidth: 1,
-    borderColor: "black",
-    width: "100%",
-    padding: 5,
-  },
-  h1: {
-    fontSize: 24,
-  },
-});
-```
-
-</CodeSurfer>
-
-
----
-
-# What did we just do?
-
-- `Note` is a <b>component</b> with 3 props: **title**, **content**, and **onClick**
-  - **title** and **content** are strings displayed as `Text` components
-  - **onClick** is a function to be passed in later
-- `Button` is a new component, and we are passing the previous onClick function as a prop
 
 ```jsx
-// Example usage
-<Note title='CSE 140L' content='Pain' onClick={someFunction} />
-```
-
----
-
-# Our first component!
-
-Let's stop and make sure our component works.
-
-- Add a few `Note` components on the `Home` screen.
-- You should see each of them show up with their corresponding props filled in
-
----
-
-## **Now let's fill out `EditNote.js` 👨‍💻**
-
----
-
-<CodeSurfer theme={codeTheme}>
-
-
-```jsx title="EditNote.js"
-export default function EditNote({ navigation }) {
-  return <SafeAreaView style={styles.container}></SafeAreaView>;
-}
-```
-
-```jsx title="EditNote.js" 1[34:47] subtitle="Ignore the navigation prop for now; it becomes important later"
-export default function EditNote({ navigation }) {
-  return <SafeAreaView style={styles.container}></SafeAreaView>;
-}
-```
-
-```jsx title="EditNote.js" subtitle="State variables to keep track of the text fields"
-export default function EditNote({ navigation }) {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  return <SafeAreaView style={styles.container}></SafeAreaView>;
-}
-```
-
-```jsx title="EditNote.js" subtitle="The 2 main text fields, using TextInput components"
-export default function EditNote({ navigation }) {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  return (
-    <SafeAreaView style={styles.container}>
-      <TextInput
-        style={styles.title}
-        placeholder='Note Title'
-        value={title}
-        onChangeText={(text) => {
-          setTitle(text);
-        }}
-      />
-      <TextInput
-        multiline
-        placeholder='Note content'
-        value={content}
-        onChangeText={(text) => {
-          setContent(text);
-        }}
-      />
-    </SafeAreaView>
-  );
-}
-```
-
-```jsx title="EditNote.js" subtitle="A button to save data"
-export default function EditNote({ navigation }) {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  return (
-    <SafeAreaView style={styles.container}>
-      <TextInput
-        style={styles.title}
-        placeholder='Note Title'
-        value={title}
-        onChangeText={(text) => {
-          setTitle(text);
-        }}
-      />
-      <TextInput
-        multiline
-        placeholder='Note content'
-        value={content}
-        onChangeText={(text) => {
-          setContent(text);
-        }}
-      />
-      <Button
-        title='Save'
-        onPress={() => {
-          saveData(title, content);
-        }}
-      />
-    </SafeAreaView>
-  );
-}
-```
-
-</CodeSurfer>
-
-
----
-
-# Navigation 🗺
-
-Navigating between screens is a bit different from React
-
-- We'll be using the [React Navigation](https://reactnavigation.org/) library
-- Most basic form: <b>Stack Navigator</b>
-  - Each screen is **"pushed"** to the stack as you navigate
-  - When you go back, it gets **"popped"**
-- For our app, we only have 2 screens: **`Home`** and **`EditNote`**
-
-As a best practice, navigation should be handled at the **screen** level (instead of components)
-
----
-
-## **Let's modify `App.js` to support navigation 👨‍💻**
-
----
-
-<CodeSurfer theme={codeTheme}>
-
-
-```jsx title="App.js"
-export default function App() {
-  return <Home />;
-}
-```
-
-```jsx title="App.js" subtitle="First, let's create a stack navigator"
-const Stack = createStackNavigator();
-export default function App() {
-  return <Home />;
-}
-```
-
-```jsx title="App.js" subtitle="Everything goes inside NavigationContainer"
-const Stack = createStackNavigator();
-export default function App() {
-  return <NavigationContainer></NavigationContainer>;
-}
-```
-
-```jsx title="App.js" subtitle="Add our screen names and their corresponding components"
-const Stack = createStackNavigator();
-export default function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName='Home'>
-        <Stack.Screen name='Home' component={Home} />
-        <Stack.Screen name='EditNote' component={EditNote} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
-```
-
-</CodeSurfer>
-
-
----
-
-# Navigating between screens
-
-We've defined the different possible screens, but we haven't defined how to go between them
-
----
-
-<CodeSurfer theme={codeTheme}>
-
-
-```jsx title="Home.js"
-export default function Home() {
-  return (
-    <SafeAreaView style={styles.safeArea}>
-      <ScrollView>
-        <View style={styles.container}>
-          <Text style={styles.title}>Hello World!</Text>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
-```
-
-```jsx title="Home.js" subtitle="The navigation prop handles navigation"
-export default function Home({ navigation }) {
-  return (
-    <SafeAreaView style={styles.safeArea}>
-      <ScrollView>
-        <View style={styles.container}>
-          <Text style={styles.title}>Hello World!</Text>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
-```
-
-```jsx title="Home.js" subtitle="Let's add a button that takes us to EditNote"
-export default function Home({ navigation }) {
-  return (
-    <SafeAreaView style={styles.safeArea}>
-      <ScrollView>
-        <View style={styles.container}>
-          <Text style={styles.title}>Hello World!</Text>
-          <Button
-            title='New Note'
-            onPress={() => {
-              navigation.navigate("EditNote");
-            }}
-          />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
-```
-
-</CodeSurfer>
-
-
----
-
-## **Now back to `EditNote.js`... 👨‍💻**
-
----
-
-<CodeSurfer theme={codeTheme}>
-
-
-```jsx title="EditNote.js"
-export default function EditNote({ navigation }) {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  return (
-    <SafeAreaView style={styles.container}>
-      <TextInput
-        style={styles.title}
-        placeholder='Note Title'
-        value={title}
-        onChangeText={(text) => {
-          setTitle(text);
-        }}
-      />
-      <TextInput
-        multiline
-        placeholder='Note content'
-        value={content}
-        onChangeText={(text) => {
-          setContent(text);
-        }}
-      />
-      <Button
-        title='Save'
-        onPress={() => {
-          saveData(title, content);
-        }}
-      />
-    </SafeAreaView>
-  );
-}
-```
-
-```jsx title="EditNote.js" subtitle="This function 'pops' the screen from the stack"
-export default function EditNote({ navigation }) {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  return (
-    <SafeAreaView style={styles.container}>
-      <TextInput
-        style={styles.title}
-        placeholder='Note Title'
-        value={title}
-        onChangeText={(text) => {
-          setTitle(text);
-        }}
-      />
-      <TextInput
-        multiline
-        placeholder='Note content'
-        value={content}
-        onChangeText={(text) => {
-          setContent(text);
-        }}
-      />
-      <Button
-        title='Save'
-        onPress={() => {
-          saveData(title, content);
-          navigation.goBack();
-        }}
-      />
-    </SafeAreaView>
-  );
-}
-```
-
-```jsx title="EditNote.js" subtitle="route.params allows us to pass data between screens"
-export default function EditNote({ route, navigation }) {
-  const [title, setTitle] = useState(route.params.title ?? "");
-  const [content, setContent] = useState(route.params.content ?? "");
-  return (
-    <SafeAreaView style={styles.container}>
-      <TextInput
-        style={styles.title}
-        placeholder='Note Title'
-        value={title}
-        onChangeText={(text) => {
-          setTitle(text);
-        }}
-      />
-      <TextInput
-        multiline
-        placeholder='Note content'
-        value={content}
-        onChangeText={(text) => {
-          setContent(text);
-        }}
-      />
-      <Button
-        title='Save'
-        onPress={() => {
-          saveData(title, content);
-          navigation.goBack();
-        }}
-      />
-    </SafeAreaView>
-  );
-}
-```
-
-</CodeSurfer>
-
-
----
-
-# Final steps
-
-Displaying all the current notes in the homescreen
-
-- We will be storing all of the notes as a **state variable**
-- `useEffect` will help us update the state as needed
-
----
-
-<CodeSurfer theme={codeTheme}>
-
-
-```jsx title="Home.js"
-export default function Home({ navigation }) {
-  return (
-    <SafeAreaView style={styles.safeArea}>
-      <ScrollView>
-        <View style={styles.container}>
-          <Text style={styles.title}>Hello World!</Text>
-          <Button
-            title='New Note'
-            onPress={() => {
-              navigation.navigate("EditNote");
-            }}
-          />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
-```
-
-```jsx title="Home.js"
-export default function Home({ navigation }) {
-  const [notes, setNotes] = useState([]);
-  useEffect(() => {
-    // Filling this in next
-  });
-  return (
-    <SafeAreaView style={styles.safeArea}>
-      <ScrollView>
-        <View style={styles.container}>
-          <Text style={styles.title}>Hello World!</Text>
-          <Button
-            title='New Note'
-            onPress={() => {
-              navigation.navigate("EditNote");
-            }}
-          />
-          {notes}
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
-```
-
-```jsx title="Home.js" subtitle="Get all data from the mock DB"
-export default function Home({ navigation }) {
-  const [notes, setNotes] = useState([]);
-  useEffect(() => {
-    getAllData();
-  });
-  return (
-    <SafeAreaView style={styles.safeArea}>
-      <ScrollView>
-        <View style={styles.container}>
-          <Text style={styles.title}>Hello World!</Text>
-          <Button
-            title='New Note'
-            onPress={() => {
-              navigation.navigate("EditNote");
-            }}
-          />
-          {notes}
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
-```
-
-```jsx title="Home.js"
-export default function Home({ navigation }) {
-  const [notes, setNotes] = useState([]);
-  useEffect(() => {
-    getAllData().then((data) => {
-      // Do something with the data!
-    });
-  });
-  return (
-    <SafeAreaView style={styles.safeArea}>
-      <ScrollView>
-        <View style={styles.container}>
-          <Text style={styles.title}>Hello World!</Text>
-          <Button
-            title='New Note'
-            onPress={() => {
-              navigation.navigate("EditNote");
-            }}
-          />
-          {notes}
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
-```
-
-```jsx title="Home.js" subtitle="The rest of the fking owl"
-export default function Home({ navigation }) {
-  const [notes, setNotes] = useState([]);
-  useEffect(() => {
-    getAllData().then((data) => {
-      setNotes(
-        data.map((note) => {
-          return (
-            <Note
-              title={note[0]}
-              content={note[1]}
-              onClick={() => {
-                navigation.navigate("EditNote", {
-                  title: note[0],
-                  content: note[1],
-                });
-              }}
+import React from "react";
+import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import { Feather } from "@expo/vector-icons";
+
+export default function Post({ item }) {
+    const articleImage = Image.resolveAssetSource(item.image);
+    const articleImageRatio = articleImage.width / articleImage.height;
+
+    return (
+        <View style={styles.article}>
+            <View style={styles.header}>
+                <View style={styles.user}>
+                    <TouchableOpacity>
+                        <Image source={item.avatar} style={styles.avatar} />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity>
+                        <Text numberOfLines={1} style={styles.name}>
+                            {item.name}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+
+                <TouchableOpacity>
+                    <Feather name="more-horizontal" size={16} />
+                </TouchableOpacity>
+            </View>
+
+            <Image
+                source={item.image}
+                style={[styles.image, { aspectRatio: articleImageRatio }]}
             />
-          );
-        }),
-      );
-    });
-  });
-  return (
-    <SafeAreaView style={styles.safeArea}>
-      <ScrollView>
-        <View style={styles.container}>
-          <Text style={styles.title}>Hello World!</Text>
-          <Button
-            title='New Note'
-            onPress={() => {
-              navigation.navigate("EditNote");
-            }}
-          />
-          {notes}
+
+            <View style={styles.action}>
+                <View style={styles.actionLeft}>
+                    <TouchableOpacity style={styles.actionButton}>
+                        <Feather name="heart" size={24} />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.actionButton}>
+                        <Feather name="message-circle" size={24} />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.actionButton}>
+                        <Feather name="send" size={24} />
+                    </TouchableOpacity>
+                </View>
+
+                <View>
+                    <TouchableOpacity style={styles.actionButton}>
+                        <Feather name="bookmark" size={24} />
+                    </TouchableOpacity>
+                </View>
+            </View>
+
+            <View style={styles.info}>
+                <Text style={styles.likeCount}>{item.likeCount} likes</Text>
+                <Text style={styles.date}>{item.date}</Text>
+            </View>
         </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
+    );
+}
+
+const ROW = { flexDirection: "row", alignItems: "center" };
+
+const styles = StyleSheet.create({
+    article: {
+        marginBottom: 15,
+    },
+    header: {
+        ...ROW,
+        justifyContent: "space-between",
+        height: 60,
+        paddingHorizontal: 16,
+    },
+    user: {
+        ...ROW,
+    },
+    avatar: {
+        width: 32,
+        height: 32,
+        borderRadius: 16,
+    },
+    name: {
+        textAlign: "center",
+        fontSize: 12,
+        lineHeight: 14,
+        color: "#262626",
+        marginLeft: 12,
+        fontWeight: "bold",
+    },
+    image: {
+        width: "100%",
+        height: null,
+        resizeMode: "contain",
+    },
+    action: {
+        ...ROW,
+        justifyContent: "space-between",
+        marginTop: 4,
+        paddingHorizontal: 8,
+    },
+    actionLeft: {
+        ...ROW,
+    },
+    actionButton: {
+        padding: 8,
+    },
+    info: {
+        paddingHorizontal: 16,
+    },
+    likeCount: {
+        color: "#262626",
+        fontWeight: "bold",
+        marginBottom: 8,
+    },
+    date: {
+        color: "#8e8e8e",
+        fontSize: 10,
+        marginBottom: 5,
+    },
+});
+
+```
+
+</CodeSurfer>
+
+---
+
+## **Moving on: `Story.js` 👨‍💻**
+
+---
+
+<CodeSurfer theme={codeTheme}>
+
+```jsx
+import React from "react";
+import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import { Feather } from "@expo/vector-icons";
+
+export default function Story({ avatar, name, isCreateStory = false, isSeen }) {
+    return (
+        <TouchableOpacity style={styles.user}>
+            <View>
+                <View
+                    style={[
+                        styles.avatarBorder,
+                        {
+                            borderColor: isCreateStory
+                                ? "transparent"
+                                : isSeen
+                                ? "rgba(0,0,0,.0975)"
+                                : "#c73191",
+                        },
+                    ]}
+                >
+                    <Image source={avatar} style={styles.avatar} />
+
+                    {isCreateStory && (
+                        <View style={styles.plusIcon}>
+                            <Feather name="plus" size={14} color="#fff" />
+                        </View>
+                    )}
+                </View>
+
+                <Text numberOfLines={1} style={styles.name}>
+                    {name}
+                </Text>
+            </View>
+        </TouchableOpacity>
+    );
+}
+
+const styles = StyleSheet.create({
+    user: {
+        width: 80,
+        paddingHorizontal: 4,
+    },
+    avatarBorder: {
+        width: 56,
+        height: 56,
+        borderRadius: 28,
+        borderWidth: 1,
+        margin: 4,
+        marginBottom: 8,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    avatar: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+    },
+    plusIcon: {
+        position: "absolute",
+        right: 0,
+        bottom: 0,
+        width: 18,
+        height: 18,
+        borderRadius: 10,
+        overflow: "hidden",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#3e95f6",
+    },
+    name: {
+        textAlign: "center",
+        fontSize: 10,
+        lineHeight: 14,
+        color: "#262626",
+        maxWidth: 64,
+    },
+});
+
+```
+
+</CodeSurfer>
+
+---
+
+## **Next up: `Stories.js` to hold our story components 👨‍💻**
+
+---
+
+<CodeSurfer theme={codeTheme}>
+
+```jsx
+import React from "react";
+import { ScrollView } from "react-native";
+import Story from "./Story";
+import { profile, stories } from "../data";
+
+export default function Stories() {
+    return (
+        // https://reactnative.dev/docs/scrollview
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            <Story
+                name="Your Story"
+                avatar={profile.avatar}
+                isCreateStory={true}
+            />
+
+            {stories.map((story) => (
+                <Story
+                    key={story.id.toString()}
+                    name={story.name}
+                    avatar={story.avatar}
+                    isSeen={story.isSeen}
+                />
+            ))}
+        </ScrollView>
+    );
 }
 ```
 
 </CodeSurfer>
 
+---
+
+## **Putting it all together: `App.js` 👨‍💻**
 
 ---
 
-# Woah what just happened?
+<CodeSurfer theme={codeTheme}>
 
-In the last step, we did a few important things.
+```jsx
+import React from "react";
+import { StyleSheet, SafeAreaView, View, FlatList } from "react-native";
+import { StatusBar } from "expo-status-bar";
+import Constants from "expo-constants";
+import Header from "./components/Header";
+import Stories from "./components/Stories";
+import Post from "./components/Post";
+import { posts } from "./data";
 
-1. Each note in the database is an array of `[title, content]`
-2. For each of these notes, we **programmatically generated** a `Note` component
-3. In the `onClick` of each `Note`, we handle navigation; `title` and `content` are passed as route params
+export default function App() {
+    const renderItem = ({ item }) => <Post item={item} />;
+    const renderHeader = () => (
+        <View style={styles.stories}>
+            <Stories />
+        </View>
+    );
+    const keyExtractor = (item) => item.id.toString();
+
+    return (
+        <SafeAreaView style={styles.container}>
+            <StatusBar style="dark" />
+
+            <View style={styles.header}>
+                <Header />
+            </View>
+
+            {/* https://reactnative.dev/docs/flatlist */}
+            <FlatList
+                data={posts}
+                renderItem={renderItem}
+                ListHeaderComponent={renderHeader}
+                keyExtractor={keyExtractor}
+                showsVerticalScrollIndicator={false}
+            />
+        </SafeAreaView>
+    );
+}
+
+const BORDER_BOTTOM = {
+    borderBottomWidth: 1,
+    borderBottomColor: "#dbdbdb",
+};
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingTop: Constants.statusBarHeight,
+    },
+    header: {
+        ...BORDER_BOTTOM,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingHorizontal: 16,
+        height: 44,
+    },
+    stories: {
+        ...BORDER_BOTTOM,
+        height: 104,
+        paddingVertical: 10,
+        paddingLeft: 8,
+        backgroundColor: "#fafafa",
+    },
+});
+
+```
+
+</CodeSurfer>
 
 ---
 
